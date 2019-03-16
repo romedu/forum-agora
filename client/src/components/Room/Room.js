@@ -16,7 +16,6 @@ class Room extends Component {
       e.preventDefault();
       const {newRoomName} = this.state;
       socket.emit("createRoom", {name: newRoomName});
-      //Add new room to rooms list
    }
 
    render(){
@@ -28,7 +27,7 @@ class Room extends Component {
                Room
             </h2>
             <BasicForm value={newRoomName} updateInputHandler={this.updateInputHandler} submitFormHandler={this.submitFormHandler} />
-            <RoomList rooms={this.props.rooms} />
+            <RoomList rooms={this.props.rooms} user={this.props.user} />
          </div>
       )
    }

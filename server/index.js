@@ -11,12 +11,12 @@ io.on('connection', function(socket) {
       socket.join(room.name);
       rooms.push(room);
       io.to(room.name).emit("joinedRoom", room.name, `The room was created`);
-      io.emit("roomCreated", room.name);
+      io.emit("roomCreated", room);
    });
 
    socket.on("joinRoom", room => {
       socket.join(room.name);
-      io.to(room.name).emit("joinedRoom", room, `${room.newChairman} joined the room`);
+      io.to(room.name).emit("joinedRoom", room.name, `${room.newChairman} joined the room`);
    })
 
    socket.on('setUsername', function(data) {

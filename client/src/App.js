@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import {BrowserRouter} from "react-router-dom";
-import './App.css';
 import Login from "./components/Auth/Login";
 import Room from "./components/Room/Room";
 import Chat from "./components/Chat/Chat";
-import socket from "../../socket";
+import socket from "./socket";
+import './App.css';
 
 class App extends Component {
    state = {
@@ -25,8 +25,14 @@ class App extends Component {
       }));
    }
 
+   addRoom = room => this.setState(prevState => ({rooms: prevState.rooms.concat(room)}));
+
+   joinRoom = room => this.setState(prevState => ({user: {...prevState.user, room}}));
+
    componentDidMount(){
-      socket.on("userExists", this.onUserLogin);
+      socket.on("userSet", this.onUserLogin);
+      socket.on("roomCreated", this.addRoom);
+      socket.on("joinedRoom", this.joinRoom);
    }
 
    render() {
@@ -36,8 +42,8 @@ class App extends Component {
          <BrowserRouter>
             <div className="App">
                {!username && <Login/>}
-               {username && !room && <Room />}
-               {username && room && <Chat/>} 
+               {username && !room && <Room user={username} rooms={this.state.rooms} />}
+               {username && room && <Chat user={username} room={room} />} 
             </div>
          </BrowserRouter>
       );
