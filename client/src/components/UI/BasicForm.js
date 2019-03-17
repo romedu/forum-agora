@@ -1,9 +1,9 @@
 import React from "react";
 
-const BasicForm = ({value, updateInputHandler, submitFormHandler}) => {
+const BasicForm = ({inputType, value, updateInputHandler, submitFormHandler}) => {
    return (
       <form onSubmit={submitFormHandler}>
-         <input type="text" value={value} onChange={updateInputHandler} />
+         <input type={inputType || "text"} value={value} onChange={updateInputHandler} />
          <button>
             Submit
          </button>

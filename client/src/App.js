@@ -27,12 +27,15 @@ class App extends Component {
 
    addRoom = room => this.setState(prevState => ({rooms: prevState.rooms.concat(room)}));
 
-   joinRoom = room => this.setState(prevState => ({user: {...prevState.user, room}}));
+   joinRoom = roomName => this.setState(prevState => ({user: {...prevState.user, room: roomName}}));
+
+   leaveRoom = () => this.setState(prevState => ({user: {...prevState.user, room: null}}));
 
    componentDidMount(){
       socket.on("userSet", this.onUserLogin);
       socket.on("roomCreated", this.addRoom);
       socket.on("joinedRoom", this.joinRoom);
+      socket.on("leftRoom", this.leaveRoom);
    }
 
    render() {
