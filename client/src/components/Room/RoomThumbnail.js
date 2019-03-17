@@ -8,9 +8,17 @@ class RoomThumbnail extends Component {
 
    updateInputHandler = ({target}) => this.setState({password: target.value});
 
+   joinRoom = () => {
+      const {password} = this.state,
+            {name, user} = this.props;
+
+      socket.emit("newBotMessage", name, `${user} joined the room`);
+      socket.emit("joinRoom", name, user, password)
+   }
+
    render(){
       const {password} = this.state,
-            {name, user, isPrivate} = this.props,
+            {name, isPrivate} = this.props,
             temporaryStyles = {
                width: "21vw",
                height: "21vw",
@@ -19,7 +27,7 @@ class RoomThumbnail extends Component {
             };
 
       return (
-         <li style={{width: "fit-content"}} onClick={() => socket.emit("joinRoom", name, user, password)}>
+         <li style={{width: "fit-content"}} onClick={this.joinRoom}>
             <div style={temporaryStyles}>
                {name}
             </div>

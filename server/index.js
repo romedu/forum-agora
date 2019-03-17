@@ -47,9 +47,9 @@ io.on('connection', function(socket) {
       io.emit("leftRoom");
    })
    
-   
+
    socket.on('msg', function({roomName, username, msg}) {
-      io.to(roomName).emit('newmsg', msg, username);
+      io.in(roomName).emit('newmsg', msg, username);
    })
 
    socket.on("newBotMessage", (roomName, message) => {

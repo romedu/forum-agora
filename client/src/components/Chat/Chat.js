@@ -31,13 +31,16 @@ class Chat extends Component {
       newMessage: ""
    }));
 
+   addBotMessage = message => this.setState(prevState => ({messages: prevState.messages.concat({message})}));
+
    componentDidMount(){
       socket.on("newmsg", this.addMessage);
-      //support bot messages
+      socket.on("botMessage", this.addBotMessage);
    }
 
    componentWillUnmount(){
       socket.off("newmsg");
+      socket.off("botMessage");
    }
 
    render(){
