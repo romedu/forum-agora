@@ -50,7 +50,7 @@ class Room extends Component {
             <form onSubmit={this.submitFormHandler}>
                <input type="text" name="name" value={newRoom.name} onChange={this.updateInputHandler} required />
                <label to="capacity"> Capacity </label>
-               <input type="number" name="capacity" value={newRoom.capacity} onChange={this.updateInputHandler} min="3" max="200" required />
+               <input type="number" name="capacity" value={newRoom.capacity} onChange={this.updateInputHandler} min="2" max="200" required />
                <label to="private"> Private </label>
                <input type="checkbox" name="isPrivate" checked={newRoom.isPrivate} onChange={this.updateInputHandler} />
                {newRoom.isPrivate && <input type="password" name="password" value={newRoom.password} onChange={this.updateInputHandler} required />}

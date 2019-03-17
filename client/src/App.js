@@ -29,6 +29,10 @@ class App extends Component {
 
    enterRoom = roomName => this.setState(prevState => ({user: {...prevState.user, room: roomName}}));
 
+   updateRoom = (roomName, roomParticipants) => this.setState(prevState => ({
+      rooms: prevState.rooms.map(room => room.name !== roomName ? room : {...room, participants: roomParticipants})
+   }));
+
    leaveRoom = () => {
       socket.emit("leaveRoom", this.state.user.room);
       this.setState(prevState => ({user: {...prevState.user, room: null}}));
@@ -38,6 +42,7 @@ class App extends Component {
       socket.on("userSet", this.onUserLogin);
       socket.on("roomCreated", this.addRoom);
       socket.on("joinedRoom", this.enterRoom);
+      socket.on("roomUpdated", this.updateRoom);
    }
 
    render() {

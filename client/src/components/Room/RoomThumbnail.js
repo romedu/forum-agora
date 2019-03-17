@@ -12,13 +12,12 @@ class RoomThumbnail extends Component {
       const {password} = this.state,
             {name, user} = this.props;
 
-      socket.emit("newBotMessage", name, `${user} joined the room`);
       socket.emit("joinRoom", name, user, password)
    }
 
    render(){
       const {password} = this.state,
-            {name, isPrivate} = this.props,
+            {name, isPrivate, capacity, participants} = this.props,
             temporaryStyles = {
                width: "21vw",
                height: "21vw",
@@ -29,7 +28,7 @@ class RoomThumbnail extends Component {
       return (
          <li style={{width: "fit-content"}} onClick={this.joinRoom}>
             <div style={temporaryStyles}>
-               {name}
+               {name} {participants}/{capacity}
             </div>
             {isPrivate && <input type="password" value={password} onChange={this.updateInputHandler} />}
          </li>
