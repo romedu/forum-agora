@@ -26,12 +26,10 @@ class Chat extends Component {
       socket.emit("msg", messageContent);
    }
 
-   addMessage = (message, username) => {
-      this.setState(prevState => ({
-         messages: prevState.messages.concat({message, username}),
-         newMessage: ""
-      }));
-   }
+   addMessage = (message, username) => this.setState(prevState => ({
+      messages: prevState.messages.concat({message, username}),
+      newMessage: ""
+   }));
 
    componentDidMount(){
       socket.on("newmsg", this.addMessage);
@@ -39,7 +37,7 @@ class Chat extends Component {
    }
 
    render(){
-      const {room} = this.props,
+      const {room, leaveRoom} = this.props,
             {messages, newMessage} = this.state,
             messagesList = messages.map(({username, message}, index) => <Message sender={username} message={message} key={`message${index}`} />);
 
@@ -51,7 +49,7 @@ class Chat extends Component {
             <h3>
                Room: {room}
             </h3>
-            <button style={{color: "red", position: "fixed", top: "10vh", right: "10vh"}} onClick={() => socket.emit("leaveRoom", room)}>
+            <button style={{color: "red", position: "fixed", top: "10vh", right: "10vh"}} onClick={leaveRoom}>
                Leave Room
             </button>
             <div>

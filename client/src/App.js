@@ -29,13 +29,15 @@ class App extends Component {
 
    joinRoom = roomName => this.setState(prevState => ({user: {...prevState.user, room: roomName}}));
 
-   leaveRoom = () => this.setState(prevState => ({user: {...prevState.user, room: null}}));
+   leaveRoom = () => {
+      socket.emit("leaveRoom", this.state.user.room);
+      this.setState(prevState => ({user: {...prevState.user, room: null}}));
+   }
 
    componentDidMount(){
       socket.on("userSet", this.onUserLogin);
       socket.on("roomCreated", this.addRoom);
       socket.on("joinedRoom", this.joinRoom);
-      socket.on("leftRoom", this.leaveRoom);
    }
 
    render() {
@@ -46,7 +48,7 @@ class App extends Component {
             <div className="App">
                {!username && <Login/>}
                {username && !room && <Room user={username} rooms={this.state.rooms} />}
-               {username && room && <Chat user={username} room={room} />} 
+               {username && room && <Chat user={username} room={room} leaveRoom={this.leaveRoom} />} 
             </div>
          </BrowserRouter>
       );
