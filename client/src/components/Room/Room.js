@@ -18,7 +18,8 @@ class Room extends Component {
          newRoom: {
             ...prevState.newRoom,
             [target.name]: target.type === "checkbox" ? !prevState.newRoom.isPrivate : target.value.trim()
-         }
+         },
+         errorMessage: null
       }));
    }
 
@@ -32,6 +33,10 @@ class Room extends Component {
 
    componentDidMount(){
       socket.on("failedRoomAttemp", this.setErrorMessage);
+   }
+
+   componentWillUnmount(){
+      socket.off("failedRoomAttemp");
    }
 
    render(){

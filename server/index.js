@@ -5,12 +5,12 @@ const app = require("express")(),
       rooms = [];
 
 io.on('connection', function(socket) {
-   socket.on('setUsername', function(data) {
-      if(users.indexOf(data) > -1) {
-         socket.emit('userExists', data + ' username is taken! Try some other username.');
-      } else {
-         users.push(data);
-         socket.emit('userSet', {username: data, rooms});
+   socket.on('setUsername', function(username) {
+      if(!username.trim()) socket.emit("failedLogin", "An username is required");
+      else if(users.includes(username)) socket.emit("failedLogin", "Username is taken! Try some other username.");
+      else {
+         users.push(username);
+         socket.emit('userSet', {username, rooms});
       }
    });
 
@@ -46,6 +46,7 @@ io.on('connection', function(socket) {
       socket.leave(roomName);
       io.emit("leftRoom");
    })
+   
    
    socket.on('msg', function({roomName, username, msg}) {
       io.to(roomName).emit('newmsg', msg, username);

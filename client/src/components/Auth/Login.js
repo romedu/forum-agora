@@ -4,12 +4,14 @@ import socket from "../../socket";
 
 class Login extends Component {
    state = {
-      username: ""
+      username: "",
+      errorMessage: null
    }
 
-   updateInputHandler = ({target}) => {
-      this.setState({username: target.value});
-   }
+   updateInputHandler = ({target}) => this.setState({
+      username: target.value.trim(),
+      errorMessage: null
+   });
 
    submitFormHandler = e => {
       e.preventDefault();
@@ -17,8 +19,18 @@ class Login extends Component {
       socket.emit("setUsername", username);
    }
 
+   setErrorMessage = errorMessage => this.setState({errorMessage});
+
+   componentDidMount(){
+      socket.on("failedLogin", this.setErrorMessage);
+   }
+
+   componentWillUnmount(){
+      socket.off("failedLogin");
+   }
+
    render(){
-      const {username} = this.state;
+      const {username, errorMessage} = this.state;
 
       return (
          <div>
@@ -26,6 +38,7 @@ class Login extends Component {
                Login
             </h2>
             <BasicForm value={username} updateInputHandler={this.updateInputHandler} submitFormHandler={this.submitFormHandler} />
+            {errorMessage && <div style={{color: "red"}}> {errorMessage} </div>}
          </div>
       )
    }

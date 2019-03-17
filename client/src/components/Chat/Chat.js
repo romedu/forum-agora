@@ -36,6 +36,10 @@ class Chat extends Component {
       //support bot messages
    }
 
+   componentWillUnmount(){
+      socket.off("newmsg");
+   }
+
    render(){
       const {room, leaveRoom} = this.props,
             {messages, newMessage} = this.state,

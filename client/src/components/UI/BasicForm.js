@@ -3,7 +3,7 @@ import React from "react";
 const BasicForm = ({inputType, value, updateInputHandler, submitFormHandler}) => {
    return (
       <form onSubmit={submitFormHandler}>
-         <input type={inputType || "text"} value={value} onChange={updateInputHandler} />
+         <input type={inputType || "text"} value={value} onChange={updateInputHandler} required/>
          <button>
             Submit
          </button>
