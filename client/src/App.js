@@ -34,8 +34,14 @@ class App extends Component {
    }));
 
    leaveRoom = () => {
-      socket.emit("leaveRoom", this.state.user.room);
-      this.setState(prevState => ({user: {...prevState.user, room: null}}));
+      const {username, room} = this.state.user;
+      socket.emit("leaveRoom", username, room);
+      this.setState(prevState => ({
+         user: {
+            ...prevState.user, 
+            room: null
+         }
+      }));
    }
 
    componentDidMount(){

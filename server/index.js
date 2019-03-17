@@ -49,20 +49,17 @@ io.on('connection', function(socket) {
       else socket.emit("failedRoomAttemp", "That room doesn't exist");
    });
 
-   socket.on("leaveRoom", roomName => {
+   socket.on("leaveRoom", (username, roomName) => {
       let roomToLeave = rooms.find(room => room.name === roomName);
       roomToLeave.participants--;
       socket.leave(roomName);
+      io.to(roomName).emit("botMessage", `${username} left the room`);
       io.emit("roomUpdated", roomName, roomToLeave.participants);
    })
    
    // Messages
    socket.on('msg', function({roomName, username, msg}) {
       io.in(roomName).emit('newmsg', msg, username);
-   })
-
-   socket.on("newBotMessage", (roomName, message) => {
-      io.to(roomName).emit("botMessage", message);
    })
 });
 
