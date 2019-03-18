@@ -1,17 +1,18 @@
 const app = require("express")(),
       http = require('http').Server(app),
-      io = require('socket.io')(http),
-      users = [],
-      rooms = [];
+      io = require('socket.io')(http);
+
+var users = [],
+    rooms = [];
 
 io.on('connection', function(socket) {
 
    // Authentication
-   socket.on('setUsername', function(username) {
+   socket.on('setUsername', username => {
       if(!username.trim()) socket.emit("failedLogin", "An username is required");
-      else if(users.includes(username)) socket.emit("failedLogin", "Username is taken! Try some other username.");
+      else if(users.find(user => user.username === username)) socket.emit("failedLogin", "Username is taken! Try some other username.");
       else {
-         users.push(username);
+         users.push({username, id: socket.id});
          socket.emit('userSet', {username, rooms});
       }
    });
@@ -35,7 +36,7 @@ io.on('connection', function(socket) {
    socket.on("joinRoom", (roomName, username, roomPassword) => {
       let roomToJoin = rooms.find(room => room.name === roomName);
       if(roomToJoin){
-         //If the room is private it verifies it's password matches the one received
+         // If the room is private it verifies it's password matches the one received
          if(roomToJoin.isPrivate && roomToJoin.password !== roomPassword) socket.emit("failedRoomAttemp", "Invalid password");
          else if(Number(roomToJoin.participants) === Number(roomToJoin.capacity)) socket.emit("failedRoomAttemp", "Room is full");
          else {
@@ -52,15 +53,23 @@ io.on('connection', function(socket) {
    socket.on("leaveRoom", (username, roomName) => {
       let roomToLeave = rooms.find(room => room.name === roomName);
       roomToLeave.participants--;
+      // Delete the room if it is empty
+      if(roomToLeave.participants === 0) rooms = rooms.filter(room => room.name !== roomName);
       socket.leave(roomName);
       io.to(roomName).emit("botMessage", `${username} left the room`);
       io.emit("roomUpdated", roomName, roomToLeave.participants);
    })
    
+
    // Messages
-   socket.on('msg', function({roomName, username, msg}) {
+   socket.on('msg', ({roomName, username, msg}) => {
       io.in(roomName).emit('newmsg', msg, username);
    })
+
+
+   // Disconnection
+   // Makes the username available
+   socket.on("disconnecting", () => users = users.filter(user => user.id !== socket.id));
 });
 
 http.listen(3000, function() {

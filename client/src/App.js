@@ -29,9 +29,15 @@ class App extends Component {
 
    enterRoom = roomName => this.setState(prevState => ({user: {...prevState.user, room: roomName}}));
 
-   updateRoom = (roomName, roomParticipants) => this.setState(prevState => ({
-      rooms: prevState.rooms.map(room => room.name !== roomName ? room : {...room, participants: roomParticipants})
-   }));
+   updateRoom = (roomName, roomParticipants) => {
+      // Delete the room if it is empty
+      if(roomParticipants === 0) this.setState(prevState => ({rooms: prevState.rooms.filter(room => room.name !== roomName)}));
+      else {
+         this.setState(prevState => ({
+            rooms: prevState.rooms.map(room => room.name !== roomName ? room : {...room, participants: roomParticipants})
+         }));
+      }
+   };
 
    leaveRoom = () => {
       const {username, room} = this.state.user;
