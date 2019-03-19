@@ -59,7 +59,7 @@ class Chat extends Component {
             <button style={{color: "red", position: "fixed", top: "10vh", right: "10vh"}} onClick={leaveRoom}>
                Leave Room
             </button>
-            <div>
+            <div style={{position: "fixed", bottom: "0px", width: "100vw", backgroundColor: "black", padding: "3vh 0"}}>
                <BasicForm updateInputHandler={this.updateInputHandler} submitFormHandler={this.submitFormHandler} value={newMessage} />
             </div>
             <ul>

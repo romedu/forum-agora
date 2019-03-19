@@ -26,8 +26,8 @@ class RoomThumbnail extends Component {
             };
 
       return (
-         <li style={{width: "fit-content"}} onClick={this.joinRoom}>
-            <div style={temporaryStyles}>
+         <li style={{width: "fit-content"}}>
+            <div style={temporaryStyles} onClick={this.joinRoom}>
                {name} {participants}/{capacity}
             </div>
             {isPrivate && <input type="password" value={password} onChange={this.updateInputHandler} />}

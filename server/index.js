@@ -39,27 +39,36 @@ io.on('connection', function(socket) {
          // If the room is private it verifies it's password matches the one received
          if(roomToJoin.isPrivate && roomToJoin.password !== roomPassword) socket.emit("failedRoomAttemp", "Invalid password");
          else if(Number(roomToJoin.participants) === Number(roomToJoin.capacity)) socket.emit("failedRoomAttemp", "Room is full");
-         else {
-            roomToJoin.participants++;
-            socket.join(roomName);
-            socket.emit("joinedRoom", roomName);
-            io.to(roomName).emit("botMessage", `${username} joined the room`);
-            io.emit("roomUpdated", roomName, roomToJoin.participants);
-         }
+         else updateRoom("join", roomName, username);
       }
       else socket.emit("failedRoomAttemp", "That room doesn't exist");
    });
 
    socket.on("leaveRoom", (username, roomName) => {
-      let roomToLeave = rooms.find(room => room.name === roomName);
-      roomToLeave.participants--;
-      // Delete the room if it is empty
-      if(roomToLeave.participants === 0) rooms = rooms.filter(room => room.name !== roomName);
-      socket.leave(roomName);
-      io.to(roomName).emit("botMessage", `${username} left the room`);
-      io.emit("roomUpdated", roomName, roomToLeave.participants);
+      updateRoom("leave", roomName, username);
    })
    
+   const updateRoom = (action, roomName, userUpdating) => {
+      let roomToUpdate = rooms.find(room => room.name === roomName),
+          updateMessage;
+
+      if(action === "leave"){
+         roomToUpdate.participants--;
+         // Delete the room if it is empty
+         if(roomToUpdate.participants === 0) rooms = rooms.filter(room => room.name !== roomName);
+         socket.leave(roomName);
+         updateMessage = `${userUpdating} left the room`;
+      }
+      else {
+         roomToUpdate.participants++;
+         socket.join(roomName);
+         socket.emit("joinedRoom", roomName);
+         updateMessage = `${userUpdating} joined the room`;
+      }
+
+      io.to(roomName).emit("botMessage", updateMessage);
+      io.emit("roomUpdated", roomName, roomToUpdate.participants);
+   }
 
    // Messages
    socket.on('msg', ({roomName, username, msg}) => {
@@ -68,8 +77,16 @@ io.on('connection', function(socket) {
 
 
    // Disconnection
-   // Makes the username available
-   socket.on("disconnecting", () => users = users.filter(user => user.id !== socket.id));
+   socket.on("disconnecting", () => {
+      let joinedRooms = Object.keys(socket.rooms).filter(room => room !== socket.id),
+          userDisconnecting = users.find(user => user.id === socket.id);
+
+      // If the user is inside of a room, the room's participant number is reduced by 1
+      joinedRooms.forEach(joinedRoom => updateRoom("leave", joinedRoom, userDisconnecting.username));
+
+      // Makes the username available
+      users = users.filter(user => user.id !== socket.id);
+   })
 });
 
 http.listen(3000, function() {
