@@ -1,7 +1,6 @@
 import React, {Component} from "react";
 import {Input, InputGroup, InputGroupAddon, Button} from "reactstrap";
 import Message from "./Message";
-import BasicForm from "../UI/BasicForm";
 import socket from "../../socket";
 
 class Chat extends Component {
@@ -48,7 +47,7 @@ class Chat extends Component {
       const {room, user, leaveRoom} = this.props,
             {messages, newMessage} = this.state,
             messagesList = messages.map(({username, message}, index) => {
-               return <Message sender={username} color={user === username ? "primary" : "info"} 
+               return <Message sender={username} color={user === username ? "info" : "danger"} 
                                message={message} key={`message${index}`} bot={!username} />;
             });
 
@@ -63,15 +62,15 @@ class Chat extends Component {
             <button style={{color: "red", position: "fixed", top: "10vh", right: "10vh"}} onClick={leaveRoom}>
                Leave Room
             </button>
-            <InputGroup>
+            <InputGroup style={{position: "fixed", bottom: "0px"}}>
+               <Input type="text" value={newMessage} onChange={this.updateInputHandler} />
                <InputGroupAddon addonType="append">
-                  <Button onClick={this.submitFormHandler}>
+                  <Button onClick={this.submitFormHandler} color="primary">
                      Send Message
                   </Button>
                </InputGroupAddon>
-               <Input type="text" value={newMessage} onChange={this.updateInputHandler} />
             </InputGroup>
-            <div>
+            <div className="MessagesList">
                {messagesList}
             </div>
          </div>
