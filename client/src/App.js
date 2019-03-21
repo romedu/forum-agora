@@ -31,9 +31,10 @@ class App extends Component {
 
    updateRoom = (roomName, roomParticipants) => {
       // Delete the room if it is empty
-      if(roomParticipants === 0) this.setState(prevState => ({rooms: prevState.rooms.filter(room => room.name !== roomName)}));
+      if(roomParticipants.length === 0) this.setState(prevState => ({rooms: prevState.rooms.filter(room => room.name !== roomName)}));
       else {
          this.setState(prevState => ({
+            // Updates the participants of the updated room
             rooms: prevState.rooms.map(room => room.name !== roomName ? room : {...room, participants: roomParticipants})
          }));
       }
@@ -58,14 +59,16 @@ class App extends Component {
    }
 
    render() {
-      const {username, room} = this.state.user;
+      const {user, rooms} = this.state,
+            {username, room} = user,
+            currentRoom = room && rooms.find(roomInList => roomInList.name === room);
 
       return (
          <BrowserRouter>
             <div className="App">
                {!username && <Login/>}
-               {username && !room && <Room user={username} rooms={this.state.rooms} />}
-               {username && room && <Chat user={username} room={room} leaveRoom={this.leaveRoom} />} 
+               {username && !room && <Room user={username} rooms={rooms} />}
+               {username && room && <Chat user={username} room={room} participants={currentRoom && currentRoom.participants} leaveRoom={this.leaveRoom} />} 
             </div>
          </BrowserRouter>
       );

@@ -1,0 +1,16 @@
+.ChatRoom {
+   display: flex;
+}
+
+.ChatRoom main, .ChatRoom section {
+   height: 100vh;
+}
+
+.ChatRoom main {
+   width: 80vw;
+}
+
+.ChatRoom section {
+   width: 20vw;
+   background-color: rgb(66, 55, 55);
+}

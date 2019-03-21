@@ -1,0 +1,9 @@
+.UserMessage {
+   width: 50vw;
+   margin: 6vh 0;
+}
+
+.BotMessage {
+   width: 70vw;
+   margin: 4vh 5vw;
+}

@@ -17,6 +17,7 @@ io.on('connection', function(socket) {
       }
    });
 
+
    // Rooms
    socket.on("createRoom", room => {
       // room must contain: unique name, max capacity(up to 200)
@@ -25,8 +26,9 @@ io.on('connection', function(socket) {
       else if(rooms.find(existingRoom => existingRoom.name === room.name)) socket.emit("failedRoomAttemp", "That room already exists");
       else if(room.capacity < 2 || room.capacity > 200) socket.emit("failedRoomAttemp", "The room's capacity must be between 2 and 200");
       else {
+         let currentUser = users.find(user => user.id === socket.id);
          socket.join(room.name);
-         room.participants = 1;
+         room.participants = [currentUser];
          rooms.push(room);
          socket.emit("joinedRoom", room.name);
          io.emit("roomCreated", room);
@@ -38,7 +40,7 @@ io.on('connection', function(socket) {
       if(roomToJoin){
          // If the room is private it verifies it's password matches the one received
          if(roomToJoin.isPrivate && roomToJoin.password !== roomPassword) socket.emit("failedRoomAttemp", "Invalid password");
-         else if(Number(roomToJoin.participants) === Number(roomToJoin.capacity)) socket.emit("failedRoomAttemp", "Room is full");
+         else if(Number(roomToJoin.participants.length) === Number(roomToJoin.capacity)) socket.emit("failedRoomAttemp", "Room is full");
          else updateRoom("join", roomName, username);
       }
       else socket.emit("failedRoomAttemp", "That room doesn't exist");
@@ -50,17 +52,18 @@ io.on('connection', function(socket) {
    
    const updateRoom = (action, roomName, userUpdating) => {
       let roomToUpdate = rooms.find(room => room.name === roomName),
+          currentUser = users.find(user => user.username === userUpdating),
           updateMessage;
 
       if(action === "leave"){
-         roomToUpdate.participants--;
+         roomToUpdate.participants = roomToUpdate.participants.filter(participant => participant.id !== currentUser.id);
          // Delete the room if it is empty
-         if(roomToUpdate.participants === 0) rooms = rooms.filter(room => room.name !== roomName);
+         if(roomToUpdate.participants.length === 0) rooms = rooms.filter(room => room.name !== roomName);
          socket.leave(roomName);
          updateMessage = `${userUpdating} left the room`;
       }
       else {
-         roomToUpdate.participants++;
+         roomToUpdate.participants.push(currentUser);
          socket.join(roomName);
          socket.emit("joinedRoom", roomName);
          updateMessage = `${userUpdating} joined the room`;
@@ -69,6 +72,7 @@ io.on('connection', function(socket) {
       io.to(roomName).emit("botMessage", updateMessage);
       io.emit("roomUpdated", roomName, roomToUpdate.participants);
    }
+
 
    // Messages
    socket.on('msg', ({roomName, username, msg}) => {

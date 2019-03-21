@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import {Input, InputGroup, InputGroupAddon, Button} from "reactstrap";
 import Message from "./Message";
 import socket from "../../socket";
+import "./Chat.css";
 
 class Chat extends Component {
    state = {
@@ -44,35 +45,45 @@ class Chat extends Component {
    }
 
    render(){
-      const {room, user, leaveRoom} = this.props,
+      const {room, user, participants, leaveRoom} = this.props,
             {messages, newMessage} = this.state,
             messagesList = messages.map(({username, message}, index) => {
                return <Message sender={username} color={user === username ? "info" : "danger"} 
                                message={message} key={`message${index}`} bot={!username} />;
+            }),
+            participantsList = participants && participants.map((participant, index) => {
+               return <li key={`participant${index}`}> {participant.username} </li>
             });
 
       return(
-         <div>
-            <h2>
-               Chat
-            </h2>
-            <h3>
-               Room: {room}
-            </h3>
-            <button style={{color: "red", position: "fixed", top: "10vh", right: "10vh"}} onClick={leaveRoom}>
-               Leave Room
-            </button>
-            <InputGroup style={{position: "fixed", bottom: "0px"}}>
-               <Input type="text" value={newMessage} onChange={this.updateInputHandler} />
-               <InputGroupAddon addonType="append">
-                  <Button onClick={this.submitFormHandler} color="primary">
-                     Send Message
-                  </Button>
-               </InputGroupAddon>
-            </InputGroup>
-            <div className="MessagesList">
-               {messagesList}
-            </div>
+         <div className="ChatRoom">
+            <main>
+               <h2>
+                  Room: {room}
+               </h2>
+               <button style={{color: "red", position: "fixed", top: "10vh", right: "10vh"}} onClick={leaveRoom}>
+                  Leave Room
+               </button>
+               <InputGroup style={{position: "fixed", bottom: "0px", width: "80vw"}}>
+                  <Input type="text" value={newMessage} onChange={this.updateInputHandler} />
+                  <InputGroupAddon addonType="append">
+                     <Button onClick={this.submitFormHandler} color="primary">
+                        Send Message
+                     </Button>
+                  </InputGroupAddon>
+               </InputGroup>
+               <div className="MessagesList">
+                  {messagesList}
+               </div>
+            </main>
+            <section>
+               <h5>
+                  Participants
+               </h5>
+               <ul>
+                  {participantsList}
+               </ul>
+            </section>
          </div>
       )
    }
