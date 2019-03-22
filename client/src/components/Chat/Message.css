@@ -1,3 +1,7 @@
+.Message {
+   word-wrap: break-word;
+}
+
 .UserMessage {
    width: 50vw;
    margin: 6vh 0;

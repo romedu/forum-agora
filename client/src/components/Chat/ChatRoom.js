@@ -1,10 +1,10 @@
 import React, {Component} from "react";
-import {Input, InputGroup, InputGroupAddon, Button} from "reactstrap";
+import {Form, Input, InputGroup, InputGroupAddon, Button} from "reactstrap";
 import Message from "./Message";
 import socket from "../../socket";
-import "./Chat.css";
+import "./ChatRoom.css";
 
-class Chat extends Component {
+class ChatRoom extends Component {
    state = {
       messages: [],
       newMessage: ""
@@ -61,17 +61,19 @@ class Chat extends Component {
                <h2>
                   Room: {room}
                </h2>
-               <button style={{color: "red", position: "fixed", top: "10vh", right: "10vh"}} onClick={leaveRoom}>
+               <Button color="danger" style={{position: "fixed", top: "1.5vh", left: "2vh"}} onClick={leaveRoom}>
                   Leave Room
-               </button>
-               <InputGroup style={{position: "fixed", bottom: "0px", width: "80vw"}}>
-                  <Input type="text" value={newMessage} onChange={this.updateInputHandler} />
-                  <InputGroupAddon addonType="append">
-                     <Button onClick={this.submitFormHandler} color="primary">
-                        Send Message
-                     </Button>
-                  </InputGroupAddon>
-               </InputGroup>
+               </Button>
+               <Form onSubmit={this.submitFormHandler} style={{position: "fixed", bottom: "0px", width: "80%"}}>
+                  <InputGroup>
+                     <Input type="text" value={newMessage} onChange={this.updateInputHandler} />
+                     <InputGroupAddon addonType="append">
+                        <Button color="primary">
+                           Send Message
+                        </Button>
+                     </InputGroupAddon>
+                  </InputGroup>
+               </Form>
                <div className="MessagesList">
                   {messagesList}
                </div>
@@ -89,4 +91,4 @@ class Chat extends Component {
    }
 }
 
-export default Chat;
+export default ChatRoom;
