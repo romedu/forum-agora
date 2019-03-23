@@ -1,0 +1,5 @@
+.RoomList {
+   display: flex;
+   flex-wrap: wrap;
+   margin: 10vh 0 5vh;
+}

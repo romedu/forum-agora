@@ -1,13 +1,14 @@
 import React from "react";
 import RoomThumbnail from "./RoomThumbnail";
+import "./RoomList.css";
 
 const RoomList = ({rooms, user}) => {
    const roomThumbnails = rooms.map((room, index) => <RoomThumbnail key={`room${index}`} user={user} {...room} />);
    
    return (
-      <ul>
+      <div className="RoomList">
          {roomThumbnails}
-      </ul>
+      </div>
    )
 }
 

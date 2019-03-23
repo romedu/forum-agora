@@ -1,8 +1,9 @@
 import React, {Component} from "react";
 import RoomList from "./RoomList";
 import socket from "../../socket";
+import "./Rooms.css";
 
-class Room extends Component {
+class Rooms extends Component {
    state = {
       newRoom: {
          name: "",
@@ -43,7 +44,7 @@ class Room extends Component {
       const {newRoom, errorMessage} = this.state;
 
       return (
-         <div>
+         <div className="Rooms">
             <h2>
                Room
             </h2>
@@ -65,4 +66,4 @@ class Room extends Component {
    }
 }
 
-export default Room;
+export default Rooms;

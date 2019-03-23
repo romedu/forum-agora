@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {BrowserRouter} from "react-router-dom";
 import Login from "./components/Auth/Login";
-import Room from "./components/Room/Room";
+import Rooms from "./components/Rooms/Rooms";
 import ChatRoom from "./components/Chat/ChatRoom/ChatRoom";
 import socket from "./socket";
 import './App.css';
@@ -67,7 +67,7 @@ class App extends Component {
          <BrowserRouter>
             <div className="App">
                {!username && <Login/>}
-               {username && !room && <Room user={username} rooms={rooms} />}
+               {username && !room && <Rooms user={username} rooms={rooms} />}
                {username && room && <ChatRoom user={username} room={room} participants={currentRoom && currentRoom.participants} leaveRoom={this.leaveRoom} />} 
             </div>
          </BrowserRouter>
