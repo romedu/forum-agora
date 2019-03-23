@@ -1,4 +1,5 @@
 import React from "react";
+import "./ParticipantsList.css";
 
 const ParticipantsList = ({participants}) => {
     const participantItems = participants.map((participant, index) => {
@@ -8,7 +9,7 @@ const ParticipantsList = ({participants}) => {
     });
     
     return (
-        <section>
+        <section className="ParticipantsList">
             <h5>
               Participants
             </h5>

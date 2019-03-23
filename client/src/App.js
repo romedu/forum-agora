@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {BrowserRouter} from "react-router-dom";
 import Login from "./components/Auth/Login";
 import Room from "./components/Room/Room";
-import ChatRoom from "./components/Chat/ChatRoom";
+import ChatRoom from "./components/Chat/ChatRoom/ChatRoom";
 import socket from "./socket";
 import './App.css';
 

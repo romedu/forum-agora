@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import Message from "./Message";
+import Message from "./Message/Message";
 import socket from "../../socket";
 
 class MessagesList extends Component {
@@ -25,11 +25,11 @@ class MessagesList extends Component {
    }
    
    render(){
-       const {user} = this.props,
+       const {user, showingParticipants} = this.props,
              {messages} = this.state,
              messagesItems = messages.map(({username, message}, index) => {
                 return <Message sender={username} color={user === username ? "info" : "danger"} 
-                                message={message} key={`message${index}`} bot={!username} />;
+                                message={message} key={`message${index}`} bot={!username} showingParticipants={showingParticipants} />;
              });
        
        return (

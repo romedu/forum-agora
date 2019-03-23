@@ -8,29 +8,31 @@ class MessageForm extends Component {
     }
     
     updateInputHandler = ({target}) => {
-      this.setState({newMessage: target.value});
+      this.setState({messageText: target.value});
    }
 
    submitFormHandler = e => {
       e.preventDefault();
-      const {newMessage} = this.state,
+      const {messageText} = this.state,
             {room, user} = this.props,
             messageContent = {
                roomName: room,
                username: user,
-               msg: newMessage
+               msg: messageText
             };
 
+      this.setState({messageText: ""});
       socket.emit("msg", messageContent);
    }
    
    render(){
-       const {newMessage} = this.state;
+       const {messageText} = this.state,
+             {showingParticipants} = this.props;
        
        return (
-            <Form onSubmit={this.submitFormHandler} style={{position: "fixed", bottom: "0px", width: "80%"}}>
+            <Form onSubmit={this.submitFormHandler} style={{position: "fixed", bottom: "0px", width: showingParticipants ? "80%" : "100%"}}>
               <InputGroup>
-                 <Input type="text" value={newMessage} onChange={this.updateInputHandler} />
+                 <Input type="text" value={messageText} onChange={this.updateInputHandler} />
                  <InputGroupAddon addonType="append">
                     <Button color="primary">
                        Send Message
