@@ -52,24 +52,22 @@ io.on('connection', function(socket) {
    
    const updateRoom = (action, roomName, userUpdating) => {
       let roomToUpdate = rooms.find(room => room.name === roomName),
-          currentUser = users.find(user => user.username === userUpdating),
-          updateMessage;
+          currentUser = users.find(user => user.username === userUpdating);
 
       if(action === "leave"){
          roomToUpdate.participants = roomToUpdate.participants.filter(participant => participant.id !== currentUser.id);
          // Delete the room if it is empty
          if(roomToUpdate.participants.length === 0) rooms = rooms.filter(room => room.name !== roomName);
          socket.leave(roomName);
-         updateMessage = `${userUpdating} left the room`;
+         io.to(roomName).emit("botMessage", `${userUpdating} left the room`);
       }
       else {
          roomToUpdate.participants.push(currentUser);
+         io.to(roomName).emit("botMessage", `${userUpdating} joined the room`);
          socket.join(roomName);
          socket.emit("joinedRoom", roomName);
-         updateMessage = `${userUpdating} joined the room`;
       }
 
-      io.to(roomName).emit("botMessage", updateMessage);
       io.emit("roomUpdated", roomName, roomToUpdate.participants);
    }
 
