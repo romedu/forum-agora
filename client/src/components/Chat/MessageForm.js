@@ -32,14 +32,14 @@ class MessageForm extends Component {
        return (
             <Form onSubmit={this.submitFormHandler} style={{position: "fixed", bottom: "0px", width: showingParticipants ? "80%" : "100%"}}>
               <InputGroup>
-                 <Input type="text" value={messageText} onChange={this.updateInputHandler} />
+                 <Input type="text" value={messageText} onChange={this.updateInputHandler} autoComplete="off" />
                  <InputGroupAddon addonType="append">
                     <Button color="primary">
                        Send Message
                     </Button>
                  </InputGroupAddon>
               </InputGroup>
-           </Form>
+            </Form>
         )
    }
 }

@@ -1,0 +1,9 @@
+.Rooms {
+   height: 100vh;
+   overflow-y: auto;
+}
+
+.Rooms h2 {
+   margin: 5vh 0 8vh;
+   font-size: 3em;
+}
