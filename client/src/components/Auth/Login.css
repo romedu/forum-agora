@@ -1,0 +1,16 @@
+.Login {
+   text-align: left;
+   color: #272822;
+   font-size: 1.2em;
+}
+
+.Login h2 {
+   margin-bottom: 7vh;
+   text-align: center;
+   font-size: 2em;
+   font-weight: bold;
+}
+
+.Login button {
+   margin-top: 1vh;
+}

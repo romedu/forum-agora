@@ -9,7 +9,7 @@ class RoomForm extends Component {
          name: "",
          capacity: 20,
          isPrivate: false,
-         password: ""
+         roomPassword: ""
       },
       errorMessage: null
    }

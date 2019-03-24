@@ -24,7 +24,7 @@ class Rooms extends Component {
                Create a new room
             </Button>
             {showRoomForm && <RoomForm />}
-            {rooms && !!rooms.length ? <RoomList rooms={rooms} user={user} /> : <h3 style={{marginTop: "15vh"}}> No rooms to display </h3>}
+            {rooms && !!rooms.length ? <RoomList rooms={rooms} user={user} /> : <h3 style={{margin: "15vh 0"}}> No rooms to display </h3>}
          </div>
       )
    }
