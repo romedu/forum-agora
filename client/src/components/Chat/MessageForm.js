@@ -33,7 +33,7 @@ class MessageForm extends Component {
        return (
             <Form onSubmit={this.submitFormHandler} style={{position: "fixed", bottom: "0px", width: showingParticipants ? "80%" : "100%"}}>
               <InputGroup>
-                 <Input type="text" value={messageText} onChange={this.updateInputHandler} autoComplete="off" />
+                 <Input type="text" value={messageText} onChange={this.updateInputHandler} maxLength="500" autoComplete="off" />
                  <InputGroupAddon addonType="append">
                     <Button color={isMessageValid ? "primary" : "secondary"} disabled={!isMessageValid}>
                        Send Message

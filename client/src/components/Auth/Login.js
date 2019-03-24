@@ -50,7 +50,8 @@ class Login extends Component {
                   <Label for="username">
                      Type in your desired nickname
                   </Label>
-                  <Input type="text" id="username" value={username} onChange={this.updateInputHandler} minLength="3" placeholder="Your nickname must have between 3-15 characters e.g. Alphonse" autoComplete="off" required />
+                  <Input type="text" id="username" value={username} onChange={this.updateInputHandler} minLength="3" 
+                         placeholder="Your nickname must have between 3-15 characters e.g. Alphonse" autoComplete="off" required />
                   {errorMessage && <div style={{color: "red"}}>
                      {errorMessage}
                   </div>}
