@@ -9,14 +9,21 @@ class Login extends Component {
       errorMessage: null
    }
 
-   updateInputHandler = ({target}) => this.setState({
-      username: target.value.trim(),
-      errorMessage: null
-   });
+   updateInputHandler = ({target}) => {
+      const newValue = target.value.trim();
+
+      this.setState(() => {
+         if(newValue.length > 15) return ({errorMessage: "Only a maximum of 15 characters are allowed"});
+         return ({
+            username: newValue,
+            errorMessage: null
+         });
+      });
+   }
 
    submitFormHandler = e => {
       e.preventDefault();
-      const {username} = this.state;
+      const {username} = this.state;  
       socket.emit("setUsername", username);
    }
 
@@ -43,11 +50,11 @@ class Login extends Component {
                   <Label for="username">
                      Type in your desired nickname
                   </Label>
-                  <Input type="text" id="username" value={username} onChange={this.updateInputHandler} placeholder="Your nickname. e.g. Alphonse" autoComplete="off" required />
+                  <Input type="text" id="username" value={username} onChange={this.updateInputHandler} minLength="3" placeholder="Your nickname must have between 3-15 characters e.g. Alphonse" autoComplete="off" required />
                   {errorMessage && <div style={{color: "red"}}>
                      {errorMessage}
                   </div>}
-                  <Button color="primary">
+                  <Button color="success">
                      Submit
                   </Button>
                </Form> 

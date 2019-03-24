@@ -27,14 +27,15 @@ class MessageForm extends Component {
    
    render(){
        const {messageText} = this.state,
-             {showingParticipants} = this.props;
+             {showingParticipants} = this.props,
+             isMessageValid = !!messageText.trim().length;
        
        return (
             <Form onSubmit={this.submitFormHandler} style={{position: "fixed", bottom: "0px", width: showingParticipants ? "80%" : "100%"}}>
               <InputGroup>
                  <Input type="text" value={messageText} onChange={this.updateInputHandler} autoComplete="off" />
                  <InputGroupAddon addonType="append">
-                    <Button color="primary">
+                    <Button color={isMessageValid ? "primary" : "secondary"} disabled={!isMessageValid}>
                        Send Message
                     </Button>
                  </InputGroupAddon>

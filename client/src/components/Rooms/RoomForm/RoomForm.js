@@ -15,14 +15,18 @@ class RoomForm extends Component {
    }
 
    updateInputHandler = ({target}) => {
-      console.log("Called", target);
-      this.setState(prevState => ({
-         newRoom: {
-            ...prevState.newRoom,
-            [target.id]: target.type === "checkbox" ? !prevState.newRoom.isPrivate : target.value.trim()
-         },
-         errorMessage: null
-      }));
+      this.setState(prevState => {
+         if(target.id === "name"){
+            if(target.value.length > 20) return ({errorMessage: "Only a maximum of 20 characters are allowed"});
+         }
+         return ({
+            newRoom: {
+               ...prevState.newRoom,
+               [target.id]: target.type === "checkbox" ? !prevState.newRoom.isPrivate : target.value.trim()
+            },
+            errorMessage: null
+         })
+      });
    }
 
    submitFormHandler = e => {
@@ -54,7 +58,8 @@ class RoomForm extends Component {
                   <Label for="name">
                      Name
                   </Label>
-                  <Input type="text" id="name" placeholder="Your room name" value={newRoom.name} onChange={this.updateInputHandler} autoComplete="off" required />
+                  <Input type="text" id="name" placeholder="Your room name must have between 3-20 characters" value={newRoom.name} 
+                         onChange={this.updateInputHandler} autoComplete="off" minLength="3" required />
                   {errorMessage && <div style={{color: "red"}}> {errorMessage} </div>}
                </FormGroup>
                <FormGroup>
@@ -64,16 +69,16 @@ class RoomForm extends Component {
                   <Input type="number" id="capacity" value={newRoom.capacity} onChange={this.updateInputHandler} min="2" max="200" required />
                </FormGroup>
                <FormGroup>
-                  <label for="isPrivate" style={{marginRight: "1vw"}}>
+                  <Label for="isPrivate" style={{marginRight: "1vw"}}>
                      Make the room private
-                  </label>
+                  </Label>
                   <input type="checkbox" id="isPrivate" checked={newRoom.isPrivate} onChange={this.updateInputHandler} />
                </FormGroup>
                {newRoom.isPrivate && <FormGroup>
                   <Label for="roomPassword">
                      Room password
                   </Label>
-                  <Input type="password" id="roomPassword" value={newRoom.password} onChange={this.updateInputHandler} required />
+                  <Input type="password" id="roomPassword" value={newRoom.password} maxLength="20" onChange={this.updateInputHandler} required />
                </FormGroup>}
                <Button color="success">
                   Create Room
