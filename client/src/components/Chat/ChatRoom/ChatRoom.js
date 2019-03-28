@@ -3,6 +3,7 @@ import {Button} from "reactstrap";
 import MessagesList from "../MessagesList";
 import MessageForm from "../MessageForm";
 import ParticipantsList from "../ParticipantsList/ParticipantsList";
+import Hamburger from "../../UI/Hamburger/Hamburger";
 import "./ChatRoom.css";
 
 class ChatRoom extends Component {
@@ -14,11 +15,13 @@ class ChatRoom extends Component {
 
    render(){
       const {room, user, participants, leaveRoom} = this.props,
-            {showParticipants} = this.state;
+            {showParticipants} = this.state,
+            {availWidth} = window.screen;
 
       return(
          <div className="ChatRoom">
-            <main style={{width: showParticipants ? "80vw" : "100vw"}}>
+            <main style={{width: showParticipants && availWidth > 810 ? "80vw" : "100vw"}}>
+               <Hamburger toggleHandler={this.participantsToggler} />
                <h2>
                   Room: {room}
                </h2>

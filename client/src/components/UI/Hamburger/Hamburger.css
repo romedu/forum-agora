@@ -1,0 +1,28 @@
+.Hamburger {
+   width: 8vh;
+   height: 10vh;
+   display: flex;
+   flex-flow: column;
+   justify-content: space-around;
+   align-items: center;
+   padding: 10px 0;
+   margin-left: 4vw;
+   box-sizing: border-box;
+   cursor: pointer;
+   position: fixed;
+   top: 1vh;
+   right: 2vh;
+   z-index: 10;
+}
+
+.Hamburger div {
+   width: 90%;
+   height: 3px;
+   background-color: white;
+}
+
+@media (min-width: 811px) {
+   .Hamburger {
+       display: none;
+   }
+}

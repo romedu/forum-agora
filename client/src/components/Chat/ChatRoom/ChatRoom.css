@@ -2,10 +2,6 @@
    display: flex;
 }
 
-.ChatRoom section {
-   height: 100vh;
-}
-
 .ChatRoom main {
    height: calc(100vh - (1.5em + .75rem + 2px));
    margin-bottom: calc(1.5em + .75rem + .375rem + .375rem + 2px);
@@ -13,7 +9,13 @@
    overflow-x: hidden;
 }
 
-.ChatRoom section {
-   width: 20vw;
-   background-color: rgb(66, 55, 55);
+@media(max-width: 810px){
+   .ChatRoom main {
+      height: calc(89vh - (1.5em + .75rem + 2px));
+      padding-top: 11vh;
+   }
+
+   .ChatRoom main > button {
+      display: none;
+   }
 }

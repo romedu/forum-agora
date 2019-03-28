@@ -1,7 +1,19 @@
 .ParticipantsList {
+   width: 20vw;
+   height: 100vh;
    padding-top: 15vh;
+   background-color: rgb(66, 55, 55);
 }
 
 .ParticipantsList h5 {
    font-size: 1.7em;
+}
+
+@media(max-width: 810px){
+   .ParticipantsList {
+      width: 80vw;
+      position: absolute;
+      right: 0;
+      z-index: 5;
+   }
 }
