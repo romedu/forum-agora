@@ -1,19 +1,34 @@
 .ParticipantsList {
    width: 20vw;
    height: 100vh;
-   padding-top: 15vh;
+   padding-top: 13vh;
    background-color: rgb(66, 55, 55);
+   overflow-y: auto;
+}
+
+.ParticipantsList button {
+   display: none;
 }
 
 .ParticipantsList h5 {
    font-size: 1.7em;
+   margin-bottom: 4vh;
 }
 
 @media(max-width: 810px){
    .ParticipantsList {
-      width: 80vw;
+      width: 75vw;
+      padding-top: 15vh;
       position: absolute;
       right: 0;
       z-index: 5;
+   }
+
+   .ParticipantsList button {
+      display: inline-block;
+      position: absolute;
+      top: 5.5vw;
+      left: 5.5vw;
+      font-size: 1.2em;
    }
 }

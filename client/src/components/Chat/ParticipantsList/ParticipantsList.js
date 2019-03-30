@@ -1,7 +1,8 @@
 import React from "react";
+import {Button} from "reactstrap";
 import "./ParticipantsList.css";
 
-const ParticipantsList = ({participants}) => {
+const ParticipantsList = ({participants, leaveRoom}) => {
     const participantItems = participants.map((participant, index) => {
        return <li key={`participant${index}`}> 
                 {participant.username} 
@@ -10,6 +11,9 @@ const ParticipantsList = ({participants}) => {
     
     return (
         <section className="ParticipantsList">
+            <Button color="danger" onClick={leaveRoom}>
+               Leave Room
+            </Button>
             <h5>
               Participants
             </h5>

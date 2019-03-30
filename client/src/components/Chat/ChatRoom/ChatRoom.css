@@ -10,9 +10,13 @@
 }
 
 @media(max-width: 810px){
+   .ChatRoom h2 {
+      padding: 0 2vw;
+   }
+
    .ChatRoom main {
-      height: calc(89vh - (1.5em + .75rem + 2px));
-      padding-top: 11vh;
+      height: calc(88vh - (1.5em + .75rem + 2px));
+      padding-top: 12vh;
    }
 
    .ChatRoom main > button {

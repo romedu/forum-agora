@@ -21,7 +21,7 @@ class ChatRoom extends Component {
       return(
          <div className="ChatRoom">
             <main style={{width: showParticipants && availWidth > 810 ? "80vw" : "100vw"}}>
-               <Hamburger toggleHandler={this.participantsToggler} />
+               <Hamburger toggleHandler={this.participantsToggler} insideDrawer={showParticipants} />
                <h2>
                   Room: {room}
                </h2>
@@ -34,7 +34,7 @@ class ChatRoom extends Component {
                <MessageForm room={room} user={user} showingParticipants={showParticipants} />
                <MessagesList user={user} showingParticipants={showParticipants} />
             </main>
-            {showParticipants && participants && <ParticipantsList participants={participants} />}
+            {showParticipants && participants && <ParticipantsList participants={participants} leaveRoom={leaveRoom} />}
          </div>
       )
    }
