@@ -11,7 +11,15 @@ class ChatRoom extends Component {
       showParticipants: false
    }
    
-   participantsToggler = () => this.setState(prevState => ({showParticipants: !prevState.showParticipants}));
+   participantsToggler = event => {
+      event.stopPropagation();
+      this.setState(prevState => ({showParticipants: !prevState.showParticipants}));
+   }
+
+   closeParticipantsTab = () => {
+      const {showParticipants} = this.state;
+      if(showParticipants) this.participantsToggler();
+   }
 
    render(){
       const {room, user, participants, leaveRoom} = this.props,
@@ -20,7 +28,7 @@ class ChatRoom extends Component {
 
       return(
          <div className="ChatRoom">
-            <main style={{width: showParticipants && availWidth > 810 ? "80vw" : "100vw"}}>
+            <main style={{width: showParticipants && availWidth > 810 ? "80vw" : "100vw"}} onClick={this.closeParticipantsTab}>
                <Hamburger toggleHandler={this.participantsToggler} insideDrawer={showParticipants} />
                <h2>
                   Room: {room}

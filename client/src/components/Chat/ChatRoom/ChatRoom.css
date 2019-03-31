@@ -2,6 +2,10 @@
    display: flex;
 }
 
+.ChatRoom h2 {
+   padding-top: 2vh;
+}
+
 .ChatRoom main {
    height: calc(100vh - (1.5em + .75rem + 2px));
    margin-bottom: calc(1.5em + .75rem + .375rem + .375rem + 2px);
