@@ -1,5 +1,5 @@
 import React from "react";
-import RoomThumbnail from "../RoomThumbnail";
+import RoomThumbnail from "../RoomThumbnail/RoomThumbnail";
 import "./RoomList.css";
 
 const RoomList = ({rooms, user}) => {

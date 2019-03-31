@@ -58,7 +58,7 @@ class RoomForm extends Component {
                   <Label for="name">
                      Name
                   </Label>
-                  <Input type="text" id="name" placeholder="Your room name must have between 3-20 characters" value={newRoom.name} 
+                  <Input type="text" id="name" placeholder="Between 3 - 20 characters" value={newRoom.name} 
                          onChange={this.updateInputHandler} autoComplete="off" minLength="3" required />
                   {errorMessage && <div style={{color: "red"}}> {errorMessage} </div>}
                </FormGroup>
@@ -78,7 +78,7 @@ class RoomForm extends Component {
                   <Label for="roomPassword">
                      Room password
                   </Label>
-                  <Input type="password" id="roomPassword" value={newRoom.password} maxLength="20" onChange={this.updateInputHandler} required />
+                  <Input type="password" id="roomPassword" placeholder="Your room's password" value={newRoom.password} maxLength="20" onChange={this.updateInputHandler} required />
                </FormGroup>}
                <Button color="success">
                   Create Room

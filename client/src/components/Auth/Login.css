@@ -14,3 +14,15 @@
 .Login button {
    margin-top: 1vh;
 }
+
+.Login .jumbotron {
+   width: 60vw;
+   margin: 15vh 20vw;
+}
+
+@media(max-width: 810px){
+   .Login .jumbotron {
+      width: 90vw;
+      margin: 15vh 5vw;
+   }
+}

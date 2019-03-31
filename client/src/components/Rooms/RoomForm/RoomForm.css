@@ -8,3 +8,10 @@
 .RoomForm h3 {
    margin-bottom: 3vh;
 }
+
+@media(max-width: 810px){
+   .RoomForm {
+      width: 90vw;
+      margin: 10vh 5vw 0
+   }
+}

@@ -42,7 +42,7 @@ class Login extends Component {
 
       return (
          <div className="Login">
-            <Jumbotron style={{width: "60vw", margin: "15vh 20vw"}}>
+            <Jumbotron>
                <h2>
                   Login
                </h2>
@@ -51,7 +51,7 @@ class Login extends Component {
                      Type in your desired nickname
                   </Label>
                   <Input type="text" id="username" value={username} onChange={this.updateInputHandler} minLength="3" 
-                         placeholder="Your nickname must have between 3-15 characters e.g. Alphonse" autoComplete="off" required />
+                         placeholder="Between 3-15 characters e.g. Alvin" autoComplete="off" required />
                   {errorMessage && <div style={{color: "red"}}>
                      {errorMessage}
                   </div>}

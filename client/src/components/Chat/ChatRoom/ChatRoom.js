@@ -12,7 +12,7 @@ class ChatRoom extends Component {
    }
    
    participantsToggler = event => {
-      event.stopPropagation();
+      if(event) event.stopPropagation();
       this.setState(prevState => ({showParticipants: !prevState.showParticipants}));
    }
 

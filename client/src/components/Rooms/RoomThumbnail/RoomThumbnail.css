@@ -1,0 +1,12 @@
+.RoomThumbnail {
+   width: 25%;
+   margin: 5vh 4%;
+   flex: inherit;
+}
+
+@media(max-width: 810px){
+   .RoomThumbnail {
+      width: 40%;
+      margin: 5vh 5%;
+   }
+}
