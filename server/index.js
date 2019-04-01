@@ -13,10 +13,15 @@ io.on('connection', function(socket) {
       // An username must be unique and have between 3 - 15 characters
       if(!trimmedUsername) socket.emit("failedLogin", "An username is required");
       else if (trimmedUsername.length < 3 || trimmedUsername.length > 15) socket.emit("failedLogin", "Your nickname must have between 3-15 characters");
-      else if(users.find(user => user.username === trimmedUsername)) socket.emit("failedLogin", "Username is taken! Try some other username.");
+      else if(users.find(user => user.username === trimmedUsername)) socket.emit("failedLogin", "Nickname is taken! Try some other nickname.");
       else {
+         const passwordLessRooms = rooms.map(room => {
+            const {password, ...roomData} = room;
+            return roomData;
+         });
+
          users.push({username: trimmedUsername, id: socket.id});
-         socket.emit('userSet', {username: trimmedUsername, rooms});
+         socket.emit('userSet', {username: trimmedUsername, rooms: passwordLessRooms});
       }
    });
 
@@ -46,8 +51,8 @@ io.on('connection', function(socket) {
       let roomToJoin = rooms.find(room => room.name === roomName);
       if(roomToJoin){
          // If the room is private it verifies it's password matches the one received
-         if(roomToJoin.isPrivate && roomToJoin.password !== roomPassword) socket.emit("failedRoomAttemp", "Invalid password");
-         else if(Number(roomToJoin.participants.length) === Number(roomToJoin.capacity)) socket.emit("failedRoomAttemp", "Room is full");
+         if(roomToJoin.isPrivate && roomToJoin.password !== roomPassword) socket.emit("unauthorized", "Invalid password");
+         else if(Number(roomToJoin.participants.length) === Number(roomToJoin.capacity)) socket.emit("unauthorized", "Room is full");
          else updateRoom("join", roomName, username);
       }
       else socket.emit("failedRoomAttemp", "That room doesn't exist");

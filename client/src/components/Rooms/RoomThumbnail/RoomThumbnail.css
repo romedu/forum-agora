@@ -4,6 +4,11 @@
    flex: inherit;
 }
 
+.FullRoom {
+   font-weight: bold;
+   color: #dc3545;
+}
+
 @media(max-width: 810px){
    .RoomThumbnail {
       width: 40%;

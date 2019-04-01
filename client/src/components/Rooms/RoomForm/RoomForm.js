@@ -9,7 +9,7 @@ class RoomForm extends Component {
          name: "",
          capacity: 20,
          isPrivate: false,
-         roomPassword: ""
+         password: ""
       },
       errorMessage: null
    }
@@ -75,10 +75,10 @@ class RoomForm extends Component {
                   <input type="checkbox" id="isPrivate" checked={newRoom.isPrivate} onChange={this.updateInputHandler} />
                </FormGroup>
                {newRoom.isPrivate && <FormGroup>
-                  <Label for="roomPassword">
+                  <Label for="password">
                      Room password
                   </Label>
-                  <Input type="password" id="roomPassword" placeholder="Your room's password" value={newRoom.password} maxLength="20" onChange={this.updateInputHandler} required />
+                  <Input type="password" id="password" placeholder="Your room's password" value={newRoom.password} maxLength="20" onChange={this.updateInputHandler} required />
                </FormGroup>}
                <Button color="success">
                   Create Room
