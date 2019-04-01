@@ -19,7 +19,6 @@
    }
 
    .ChatRoom main {
-      height: calc(88vh - (1.5em + .75rem + 2px));
       padding-top: 12vh;
    }
 
