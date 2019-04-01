@@ -38,7 +38,7 @@ class RoomThumbnail extends Component {
 
       return (
          <Fragment>
-            <Card outline id={name} color={roomIsFull ? "danger" : "success"} className="RoomThumbnail" style={{backgroundColor: "inherit"}}>
+            <Card outline id={`room${name}`} color={roomIsFull ? "danger" : "success"} className="RoomThumbnail" style={{backgroundColor: "inherit"}}>
                <CardImg top width="100%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="" />
                <CardBody>
                   <CardTitle style={{fontWeight: "bold"}}>
@@ -56,7 +56,7 @@ class RoomThumbnail extends Component {
                </CardBody>
                {isPrivate && <input type="password" value={password} onChange={this.updateInputHandler} />}
             </Card>
-            <Popover isOpen={!!errorMessage} placement="bottom" target={name} style={{color: "#272822"}}>
+            <Popover isOpen={!!errorMessage} placement="bottom" target={`room${name}`} style={{color: "#272822"}}>
                <PopoverHeader>
                   {errorMessage}
                </PopoverHeader>
