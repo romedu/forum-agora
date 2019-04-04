@@ -1,12 +1,13 @@
 import React, {Component} from "react";
-import {Jumbotron, Form, Label, Input, Button} from "reactstrap";
+import {Jumbotron, Form, Label, Input, Button, Spinner} from "reactstrap";
 import socket from "../../socket";
 import "./Login.css";
 
 class Login extends Component {
    state = {
       username: "",
-      errorMessage: null
+      errorMessage: null,
+      isLoading: false
    }
 
    updateInputHandler = ({target}) => {
@@ -23,8 +24,10 @@ class Login extends Component {
 
    submitFormHandler = e => {
       e.preventDefault();
-      const {username} = this.state;  
-      socket.emit("setUsername", username);
+      this.setState({isLoading: true}, () => {
+         const {username} = this.state;
+         socket.emit("setUsername", username);
+      });  
    }
 
    setErrorMessage = errorMessage => this.setState({errorMessage});
@@ -38,7 +41,7 @@ class Login extends Component {
    }
 
    render(){
-      const {username, errorMessage} = this.state;
+      const {username, errorMessage, isLoading} = this.state;
 
       return (
          <div className="Login">
@@ -55,11 +58,12 @@ class Login extends Component {
                   {errorMessage && <div style={{color: "red"}}>
                      {errorMessage}
                   </div>}
-                  <Button color="success">
+                  <Button color={isLoading ? "secondary" : "success"} disabled={isLoading}>
                      Submit
                   </Button>
                </Form> 
-            </Jumbotron>           
+            </Jumbotron>
+            {isLoading && <Spinner size="lg" color="success" style={{display: "block", margin: "0 auto"}} />}   
          </div>
       )
    }
