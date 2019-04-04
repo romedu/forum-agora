@@ -31,11 +31,11 @@ class MessageForm extends Component {
              isMessageValid = !!messageText.trim().length;
        
        return (
-            <Form onSubmit={this.submitFormHandler} style={{position: "fixed", bottom: "0px", width: showingParticipants ? "80%" : "100%"}}>
+            <Form onSubmit={this.submitFormHandler} style={{position: "fixed", bottom: "0px", width: showingParticipants ? "80%" : "100%", zIndex: "100"}}>
               <InputGroup>
                  <Input type="text" placeholder="Your message goes here" value={messageText} onChange={this.updateInputHandler} maxLength="500" autoComplete="off" />
                  <InputGroupAddon addonType="append">
-                    <Button color={isMessageValid ? "primary" : "secondary"} disabled={!isMessageValid}>
+                    <Button color={isMessageValid ? "primary" : "secondary"} disabled={!isMessageValid} style={{opacity: "1"}}>
                        Send Message
                     </Button>
                  </InputGroupAddon>

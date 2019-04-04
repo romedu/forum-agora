@@ -21,7 +21,7 @@
       padding-top: 15vh;
       position: absolute;
       right: 0;
-      z-index: 5;
+      z-index: 120;
    }
 
    .ParticipantsList button {
